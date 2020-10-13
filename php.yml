@@ -33,11 +33,20 @@
       recurse: yes
       owner: apache 
       group: apache   
-    notify: Restart httpd
+    notify: Restart httpd 
+
+  - name: Ensure SELinux is set to Disabled mode
+    lineinfile:
+      path: /etc/selinux/config
+      regexp: '^SELINUX=enforcing$'
+      line: SELINUX=disabled  
+  
+  - name: Disable SElinux
+    selinux:
+      state: disabled
 
   handlers:
   - name: Restart httpd
     service: 
       name: httpd 
-      state: restarted  
-  
+      state: restarted 
