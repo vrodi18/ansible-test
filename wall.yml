@@ -1,0 +1,4 @@
+- hosts: web
+  tasks:
+  - name: alert
+    shell: wall "System will go down for 2 hours maintenance at 13:00 PM"
