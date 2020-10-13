@@ -1,0 +1,43 @@
+- hosts: web
+  tasks:
+  - name: Install remi package
+    yum:
+      name: http://rpms.remirepo.net/enterprise/remi-release-7.rpm 
+
+  - name: yum config
+    shell: yum-config-manager       --enable  remi-php74
+
+  - name:
+    yum: 
+      name: php
+      name: php-mysql
+  
+  - name: Wordpress.zip Download
+    get_url:
+      url: https://wordpress.org/latest.zip
+      dest: /home/centos/
+    
+  - name: unzip wordpress
+    unarchive:
+      src: /home/centos/wordpress-5.5.1.zip
+      dest: /home/centos/
+      remote_src: yes
+  
+  - name: move files to /html
+    shell: rsync -r /home/centos/wordpress/  /var/www/html
+
+  - name: change ownership of /html to apache recursivly
+    file:
+      path: /var/www/html
+      state: directory
+      recurse: yes
+      owner: apache 
+      group: apache   
+    notify: restart httpd
+
+  handlers:
+  - name: restart httpd
+    service: 
+      name: httpd 
+      state: restarted  
+  
