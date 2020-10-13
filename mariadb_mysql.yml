@@ -1,0 +1,16 @@
+- hosts: web
+  tasks: 
+  - name: Install the latest version of MariaDB
+    package:
+      name: 
+        - mariadb-server
+        - mysql
+      state: latest
+  
+  - name: Enable Mariadb
+    service:
+      name: mariadb
+      state: started
+      enabled: yes
+    
+
