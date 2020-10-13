@@ -33,10 +33,10 @@
       recurse: yes
       owner: apache 
       group: apache   
-    notify: restart httpd
+    notify: Restart httpd
 
   handlers:
-  - name: restart httpd
+  - name: Restart httpd
     service: 
       name: httpd 
       state: restarted  
